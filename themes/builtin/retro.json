@@ -1,0 +1,69 @@
+{
+  "$schema": "https://clicool.dev/schemas/theme-v2.json",
+  "name": "Retro",
+  "version": "1.0.0",
+  "author": "clicool",
+  "description": "Amber CRT monitor vibes from the 80s",
+  "tags": ["retro", "amber", "vintage", "80s", "classic"],
+
+  "prompt": {
+    "format": "classic",
+    "template": "{user}@{host}:{path}{git_branch} >",
+    "colors": {
+      "user": "#ffb000",
+      "host": "#ff9900",
+      "path": "#ffb000",
+      "git_branch": "#cc8800",
+      "symbol": "#ffb000",
+      "background": "#1a1a1a",
+      "foreground": "#ffb000"
+    },
+    "icons": {
+      "user": "💾",
+      "git": "📼",
+      "error": "⚡"
+    }
+  },
+
+  "features": {
+    "show_git": true,
+    "show_time": true,
+    "time_format": "%I:%M %p",
+    "show_exit_code": true,
+    "show_user": true,
+    "show_host": true,
+    "shorten_path": true,
+    "path_depth": 3
+  },
+
+  "terminal": {
+    "color_palette": {
+      "background": "#1a1a1a",
+      "foreground": "#ffb000",
+      "cursor": "#ffb000",
+      "selection": "#332200",
+      "ansi": [
+        "#1a1a1a",
+        "#ff6600",
+        "#ffb000",
+        "#ffcc00",
+        "#cc8800",
+        "#ff9900",
+        "#ffb000",
+        "#ffcc00"
+      ]
+    },
+    "font_recommendation": "VT323",
+    "opacity": 0.98
+  },
+
+  "widgets": ["git", "time"],
+  "layers": [],
+  "requires_plugins": [],
+
+  "banner": {
+    "enabled": true,
+    "style": "retro",
+    "animation": "fade-in"
+  }
+}

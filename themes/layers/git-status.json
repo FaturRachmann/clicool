@@ -1,0 +1,32 @@
+{
+  "name": "Git Status",
+  "type": "layer",
+  "version": "1.0.0",
+  "description": "Enhanced git branch and status indicators",
+
+  "widget": {
+    "name": "git-status",
+    "position": "prompt-suffix",
+    "priority": 100,
+    "config": {
+      "show_ahead_behind": true,
+      "show_stash_count": true,
+      "show_untracked": true,
+      "show_modified": true,
+      "icons": {
+        "clean": "✓",
+        "modified": "✗",
+        "ahead": "↑",
+        "behind": "↓",
+        "untracked": "?",
+        "stashed": "⚑"
+      },
+      "colors": {
+        "clean": "#00ff00",
+        "modified": "#ffff00",
+        "ahead": "#00ffff",
+        "behind": "#ff00ff"
+      }
+    }
+  }
+}

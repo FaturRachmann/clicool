@@ -1,0 +1,29 @@
+{
+  "name": "Kubernetes Context",
+  "type": "layer",
+  "version": "1.0.0",
+  "description": "Display current Kubernetes context and namespace",
+
+  "widget": {
+    "name": "k8s-context",
+    "position": "prompt-suffix",
+    "priority": 90,
+    "config": {
+      "show_context": true,
+      "show_namespace": true,
+      "show_cluster": false,
+      "short_context": true,
+      "icons": {
+        "context": "☸️",
+        "namespace": "📦",
+        "cluster": "🌐"
+      },
+      "colors": {
+        "context": "#ff66cc",
+        "namespace": "#66ccff",
+        "cluster": "#ff9900"
+      },
+      "format": "{context}/{namespace}"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "AWS Profile",
+  "type": "layer",
+  "version": "1.0.0",
+  "description": "Display current AWS profile and region",
+
+  "widget": {
+    "name": "aws-profile",
+    "position": "prompt-suffix",
+    "priority": 80,
+    "config": {
+      "show_profile": true,
+      "show_region": true,
+      "show_account_id": false,
+      "short_profile": true,
+      "icons": {
+        "profile": "☁️",
+        "region": "🌍",
+        "account": "🔑"
+      },
+      "colors": {
+        "profile": "#ffaa00",
+        "region": "#00a8e1",
+        "account": "#232f3e"
+      },
+      "format": "{profile}@{region}"
+    }
+  }
+}

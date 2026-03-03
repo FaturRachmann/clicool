@@ -1,0 +1,69 @@
+{
+  "$schema": "https://clicool.dev/schemas/theme-v2.json",
+  "name": "Minimal",
+  "version": "1.0.0",
+  "author": "clicool",
+  "description": "Clean and subtle - less is more",
+  "tags": ["minimal", "clean", "simple", "light"],
+
+  "prompt": {
+    "format": "minimal",
+    "template": "{path}{git_branch} ",
+    "colors": {
+      "user": "#666666",
+      "host": "#666666",
+      "path": "#333333",
+      "git_branch": "#0066cc",
+      "symbol": "#333333",
+      "background": "#ffffff",
+      "foreground": "#333333"
+    },
+    "icons": {
+      "user": "",
+      "git": "±",
+      "error": "!"
+    }
+  },
+
+  "features": {
+    "show_git": true,
+    "show_time": false,
+    "time_format": "%H:%M",
+    "show_exit_code": false,
+    "show_user": false,
+    "show_host": false,
+    "shorten_path": true,
+    "path_depth": 2
+  },
+
+  "terminal": {
+    "color_palette": {
+      "background": "#ffffff",
+      "foreground": "#333333",
+      "cursor": "#333333",
+      "selection": "#dddddd",
+      "ansi": [
+        "#ffffff",
+        "#cc3333",
+        "#33cc33",
+        "#cccc33",
+        "#3333cc",
+        "#cc33cc",
+        "#33cccc",
+        "#333333"
+      ]
+    },
+    "font_recommendation": "JetBrainsMono Nerd Font",
+    "opacity": 1.0
+  },
+
+  "widgets": ["git"],
+  "layers": [],
+  "requires_plugins": [],
+
+  "banner": {
+    "enabled": false,
+    "style": "minimal",
+    "animation": "none"
+  }
+}

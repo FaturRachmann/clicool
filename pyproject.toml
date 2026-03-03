@@ -1,0 +1,121 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "clicool"
+version = "0.1.0"
+description = "Modern Terminal Theme & Profile Engine - Make your terminal look like it owns the system"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [
+    { name = "Trustlabs", email = "trustlabs@example.com" },
+]
+keywords = [
+    "cli",
+    "terminal",
+    "theme",
+    "prompt",
+    "bash",
+    "zsh",
+    "fish",
+    "dotfiles",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Terminals",
+    "Topic :: Terminals :: Terminal Emulators/X Terminals",
+]
+dependencies = [
+    "typer>=0.9.0",
+    "rich>=13.0.0",
+    "pydantic>=2.0.0",
+    "jinja2>=3.1.0",
+    "pyyaml>=6.0.0",
+    "click>=8.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+]
+plugins = [
+    "requests>=2.31.0",
+    "docker>=6.0.0",
+]
+
+[project.scripts]
+clicool = "clicool.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/trustlabs/clicool"
+Documentation = "https://github.com/trustlabs/clicool#readme"
+Repository = "https://github.com/trustlabs/clicool"
+Issues = "https://github.com/trustlabs/clicool/issues"
+Changelog = "https://github.com/trustlabs/clicool/blob/main/CHANGELOG.md"
+
+[tool.hatch.build.targets.wheel]
+packages = ["clicool"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/clicool",
+    "/themes",
+    "/templates",
+    "/README.md",
+    "/LICENSE",
+]
+
+[tool.black]
+line-length = 100
+target-version = ["py311", "py312"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "UP", # pyupgrade
+]
+ignore = [
+    "E501",  # line too long (handled by black)
+    "B008",  # do not perform function calls in argument defaults
+    "B904",  # raise without from inside except
+]
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --cov=clicool --cov-report=term-missing"
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]

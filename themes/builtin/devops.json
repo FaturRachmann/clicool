@@ -1,0 +1,76 @@
+{
+  "$schema": "https://clicool.dev/schemas/theme-v2.json",
+  "name": "DevOps Pro",
+  "version": "1.0.0",
+  "author": "clicool",
+  "description": "For SREs and Platform Engineers - K8s, Docker, AWS ready",
+  "tags": ["devops", "k8s", "cloud", "aws", "docker", "professional"],
+
+  "prompt": {
+    "format": "powerline",
+    "template": "{user} {path} {git_branch} {k8s_context} {docker_status} λ",
+    "colors": {
+      "user": "#00d9ff",
+      "host": "#888888",
+      "path": "#ff9900",
+      "git_branch": "#00ff99",
+      "k8s_context": "#ff66cc",
+      "docker_status": "#66ccff",
+      "aws_profile": "#ffaa00",
+      "symbol": "#00d9ff",
+      "background": "#0f172a",
+      "foreground": "#e2e8f0"
+    },
+    "icons": {
+      "user": "👤",
+      "git": "📂",
+      "error": "❌",
+      "success": "✅"
+    }
+  },
+
+  "features": {
+    "show_git": true,
+    "show_time": true,
+    "time_format": "%H:%M:%S",
+    "show_exit_code": true,
+    "show_user": true,
+    "show_host": true,
+    "shorten_path": true,
+    "path_depth": 3,
+    "show_k8s": true,
+    "show_docker": true,
+    "show_aws": true
+  },
+
+  "terminal": {
+    "color_palette": {
+      "background": "#0f172a",
+      "foreground": "#e2e8f0",
+      "cursor": "#38bdf8",
+      "selection": "#1e3a5f",
+      "ansi": [
+        "#0f172a",
+        "#f43f5e",
+        "#4ade80",
+        "#facc15",
+        "#38bdf8",
+        "#c084fc",
+        "#67e8f9",
+        "#e2e8f0"
+      ]
+    },
+    "font_recommendation": "JetBrainsMono Nerd Font",
+    "opacity": 0.95
+  },
+
+  "widgets": ["git", "k8s-context", "docker-info", "aws-profile", "time", "exit-code"],
+  "layers": ["k8s-context", "docker-info", "aws-profile"],
+  "requires_plugins": [],
+
+  "banner": {
+    "enabled": true,
+    "style": "devops",
+    "animation": "slide-in"
+  }
+}

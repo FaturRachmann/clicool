@@ -1,0 +1,28 @@
+{
+  "name": "Docker Info",
+  "type": "layer",
+  "version": "1.0.0",
+  "description": "Display Docker container count and status",
+
+  "widget": {
+    "name": "docker-info",
+    "position": "prompt-suffix",
+    "priority": 85,
+    "config": {
+      "show_container_count": true,
+      "show_running_count": true,
+      "show_image_count": false,
+      "icons": {
+        "container": "🐳",
+        "running": "▶️",
+        "stopped": "⏹️"
+      },
+      "colors": {
+        "container": "#66ccff",
+        "running": "#00ff00",
+        "stopped": "#ff6666"
+      },
+      "format": "{running}/{total}"
+    }
+  }
+}

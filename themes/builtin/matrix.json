@@ -1,0 +1,69 @@
+{
+  "$schema": "https://clicool.dev/schemas/theme-v2.json",
+  "name": "Matrix",
+  "version": "1.0.0",
+  "author": "clicool",
+  "description": "Green on black hacker style - Follow the white rabbit",
+  "tags": ["matrix", "hacker", "green", "dark", "classic"],
+
+  "prompt": {
+    "format": "classic",
+    "template": "{user}@{host}:{path}{git_branch} $",
+    "colors": {
+      "user": "#00ff00",
+      "host": "#00cc00",
+      "path": "#00ff00",
+      "git_branch": "#008800",
+      "symbol": "#00ff00",
+      "background": "#000000",
+      "foreground": "#00ff00"
+    },
+    "icons": {
+      "user": "👾",
+      "git": "💾",
+      "error": "⚠"
+    }
+  },
+
+  "features": {
+    "show_git": true,
+    "show_time": true,
+    "time_format": "%H:%M",
+    "show_exit_code": true,
+    "show_user": true,
+    "show_host": true,
+    "shorten_path": true,
+    "path_depth": 4
+  },
+
+  "terminal": {
+    "color_palette": {
+      "background": "#000000",
+      "foreground": "#00ff00",
+      "cursor": "#00ff00",
+      "selection": "#003300",
+      "ansi": [
+        "#000000",
+        "#00aa00",
+        "#00ff00",
+        "#008800",
+        "#006600",
+        "#00dd00",
+        "#00ff00",
+        "#00ff00"
+      ]
+    },
+    "font_recommendation": "JetBrainsMono Nerd Font",
+    "opacity": 1.0
+  },
+
+  "widgets": ["git", "time"],
+  "layers": [],
+  "requires_plugins": [],
+
+  "banner": {
+    "enabled": true,
+    "style": "matrix",
+    "animation": "matrix"
+  }
+}

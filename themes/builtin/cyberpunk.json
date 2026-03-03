@@ -1,0 +1,70 @@
+{
+  "$schema": "https://clicool.dev/schemas/theme-v2.json",
+  "name": "Cyberpunk",
+  "version": "1.0.0",
+  "author": "clicool",
+  "description": "Neon-soaked terminal theme for night owls and cyber enthusiasts",
+  "tags": ["cyberpunk", "neon", "dark", "futuristic"],
+
+  "prompt": {
+    "format": "neon",
+    "template": "{user}@{host}:{path}{git_branch} λ",
+    "colors": {
+      "user": "#00ffff",
+      "host": "#ff00ff",
+      "path": "#ffff00",
+      "git_branch": "#ff9900",
+      "symbol": "#00ff00",
+      "background": "#0d1117",
+      "foreground": "#c9d1d9"
+    },
+    "icons": {
+      "user": "⚡",
+      "git": "📂",
+      "error": "❌",
+      "success": "✓"
+    }
+  },
+
+  "features": {
+    "show_git": true,
+    "show_time": true,
+    "time_format": "%H:%M:%S",
+    "show_exit_code": true,
+    "show_user": true,
+    "show_host": true,
+    "shorten_path": true,
+    "path_depth": 3
+  },
+
+  "terminal": {
+    "color_palette": {
+      "background": "#0d1117",
+      "foreground": "#c9d1d9",
+      "cursor": "#00ffff",
+      "selection": "#264f78",
+      "ansi": [
+        "#0d1117",
+        "#ff5555",
+        "#50fa7b",
+        "#f1fa8c",
+        "#bd93f9",
+        "#ff79c6",
+        "#8be9fd",
+        "#c9d1d9"
+      ]
+    },
+    "font_recommendation": "JetBrainsMono Nerd Font",
+    "opacity": 0.95
+  },
+
+  "widgets": ["git", "time", "exit-code"],
+  "layers": [],
+  "requires_plugins": [],
+
+  "banner": {
+    "enabled": true,
+    "style": "cyberpunk",
+    "animation": "typewriter"
+  }
+}
