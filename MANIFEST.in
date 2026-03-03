@@ -1,0 +1,10 @@
+include README.md
+include LICENSE
+include CHANGELOG.md
+include CONTRIBUTING.md
+include pyproject.toml
+
+recursive-include clicool *.py
+recursive-include themes *.json
+recursive-include templates *.j2
+recursive-include docs *.md
