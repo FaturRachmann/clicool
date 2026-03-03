@@ -2,8 +2,6 @@
 
 import logging
 import sys
-from pathlib import Path
-from typing import Optional
 
 from rich.console import Console
 from rich.logging import RichHandler
@@ -107,8 +105,8 @@ class LoggerContext:
         self,
         logger: logging.Logger,
         message: str,
-        success_message: Optional[str] = None,
-        error_message: Optional[str] = None,
+        success_message: str | None = None,
+        error_message: str | None = None,
     ):
         """
         Initialize logging context.
@@ -144,7 +142,7 @@ def log_operation(
     logger: logging.Logger,
     operation: str,
     success: bool,
-    details: Optional[str] = None,
+    details: str | None = None,
 ):
     """
     Log an operation result.

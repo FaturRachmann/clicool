@@ -2,7 +2,6 @@
 
 import os
 from pathlib import Path
-from typing import Optional, Tuple
 
 
 class FontDetector:
@@ -76,7 +75,7 @@ class FontDetector:
         """
         return len(self.detect_nerd_fonts()) > 0
 
-    def get_recommended_font(self) -> Optional[str]:
+    def get_recommended_font(self) -> str | None:
         """
         Get first recommended font that is installed.
 
@@ -119,7 +118,7 @@ class FontDetector:
 
         return fonts
 
-    def _extract_font_name(self, font_file: Path) -> Optional[str]:
+    def _extract_font_name(self, font_file: Path) -> str | None:
         """
         Extract font name from file.
 

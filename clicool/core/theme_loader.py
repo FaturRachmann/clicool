@@ -2,7 +2,6 @@
 
 import json
 from pathlib import Path
-from typing import Optional, Union
 
 from pydantic import BaseModel, Field, field_validator
 
@@ -12,37 +11,37 @@ from .. import BUILTIN_THEMES_DIR, COMMUNITY_THEMES_DIR, LAYERS_DIR
 class ColorConfig(BaseModel):
     """Color configuration for theme elements."""
 
-    user: Optional[str] = None
-    host: Optional[str] = None
-    path: Optional[str] = None
-    git_branch: Optional[str] = None
-    symbol: Optional[str] = None
+    user: str | None = None
+    host: str | None = None
+    path: str | None = None
+    git_branch: str | None = None
+    symbol: str | None = None
     # Additional colors
-    background: Optional[str] = None
-    foreground: Optional[str] = None
-    cursor: Optional[str] = None
-    selection: Optional[str] = None
+    background: str | None = None
+    foreground: str | None = None
+    cursor: str | None = None
+    selection: str | None = None
 
 
 class IconConfig(BaseModel):
     """Icon configuration for theme elements."""
 
-    user: Optional[str] = None
-    git: Optional[str] = None
-    error: Optional[str] = None
+    user: str | None = None
+    git: str | None = None
+    error: str | None = None
     # Additional icons
-    success: Optional[str] = None
-    warning: Optional[str] = None
-    info: Optional[str] = None
+    success: str | None = None
+    warning: str | None = None
+    info: str | None = None
 
 
 class PromptConfig(BaseModel):
     """Prompt configuration."""
 
     format: str = "default"
-    template: Optional[str] = None
-    colors: Optional[ColorConfig] = None
-    icons: Optional[IconConfig] = None
+    template: str | None = None
+    colors: ColorConfig | None = None
+    icons: IconConfig | None = None
 
 
 class FeaturesConfig(BaseModel):
@@ -64,19 +63,19 @@ class FeaturesConfig(BaseModel):
 class TerminalColorPalette(BaseModel):
     """Terminal color palette configuration."""
 
-    background: Optional[str] = None
-    foreground: Optional[str] = None
-    cursor: Optional[str] = None
-    selection: Optional[str] = None
-    ansi: Optional[list[str]] = None
+    background: str | None = None
+    foreground: str | None = None
+    cursor: str | None = None
+    selection: str | None = None
+    ansi: list[str] | None = None
 
 
 class TerminalConfig(BaseModel):
     """Terminal configuration."""
 
-    color_palette: Optional[TerminalColorPalette] = None
-    font_recommendation: Optional[str] = None
-    opacity: Optional[float] = Field(default=None, ge=0.0, le=1.0)
+    color_palette: TerminalColorPalette | None = None
+    font_recommendation: str | None = None
+    opacity: float | None = Field(default=None, ge=0.0, le=1.0)
 
 
 class BannerConfig(BaseModel):
@@ -102,28 +101,28 @@ class LayerConfig(BaseModel):
     name: str
     type: str = "layer"
     version: str = "1.0.0"
-    widget: Optional[WidgetConfig] = None
+    widget: WidgetConfig | None = None
 
 
 class ThemeConfig(BaseModel):
     """Main theme configuration model."""
 
-    schema_url: Optional[str] = Field(default=None, alias="$schema")
+    schema_url: str | None = Field(default=None, alias="$schema")
     name: str
     version: str = "1.0.0"
-    author: Optional[str] = None
-    description: Optional[str] = None
+    author: str | None = None
+    description: str | None = None
     tags: list[str] = Field(default_factory=list)
     type: str = "theme"  # "theme" or "layer"
 
     # Prompt configuration
-    prompt: Optional[PromptConfig] = None
+    prompt: PromptConfig | None = None
 
     # Features
-    features: Optional[FeaturesConfig] = None
+    features: FeaturesConfig | None = None
 
     # Terminal configuration
-    terminal: Optional[TerminalConfig] = None
+    terminal: TerminalConfig | None = None
 
     # Widgets and layers
     widgets: list[str] = Field(default_factory=list)
@@ -131,7 +130,7 @@ class ThemeConfig(BaseModel):
     requires_plugins: list[str] = Field(default_factory=list)
 
     # Banner
-    banner: Optional[BannerConfig] = None
+    banner: BannerConfig | None = None
 
     @field_validator("tags")
     @classmethod
@@ -216,9 +215,9 @@ class ThemeLoader:
         self._layer_cache[layer_name] = layer
         return layer
 
-    def _load_from_file(self, path: Path, model_class: type) -> Union[ThemeConfig, LayerConfig]:
+    def _load_from_file(self, path: Path, model_class: type) -> ThemeConfig | LayerConfig:
         """Load and validate JSON file."""
-        with open(path, "r") as f:
+        with open(path) as f:
             data = json.load(f)
 
         return model_class(**data)

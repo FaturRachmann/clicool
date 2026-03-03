@@ -5,7 +5,6 @@ import subprocess
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
-from typing import Optional
 
 
 class ShellType(Enum):
@@ -166,16 +165,16 @@ class ShellDetector:
     def _is_login_shell(self) -> bool:
         """Check if current shell is a login shell."""
         # Check if SHELL is set and we're in a login context
-        return os.environ.get("LOGIN_SHELL", "0") == "1" or os.environ.get(
-            "BASH_VERSION"
-        ) is not None
+        return (
+            os.environ.get("LOGIN_SHELL", "0") == "1" or os.environ.get("BASH_VERSION") is not None
+        )
 
     def _is_interactive_shell(self) -> bool:
         """Check if current shell is interactive."""
         # Check if we have a terminal
         return os.isatty(0)
 
-    def get_config_path(self, shell_type: Optional[ShellType] = None) -> Path:
+    def get_config_path(self, shell_type: ShellType | None = None) -> Path:
         """
         Get the config path for a shell type.
 
@@ -212,7 +211,7 @@ def detect_shell() -> ShellInfo:
     return _detector.detect()
 
 
-def get_shell_config_path(shell_type: Optional[ShellType] = None) -> Path:
+def get_shell_config_path(shell_type: ShellType | None = None) -> Path:
     """Get shell config path."""
     return _detector.get_config_path(shell_type)
 

@@ -7,8 +7,8 @@ Make your terminal look like it owns the system.
 __version__ = "0.1.5"
 __author__ = "Trustlabs"
 
-from pathlib import Path
 import os
+from pathlib import Path
 
 # Package root directory
 PACKAGE_ROOT = Path(__file__).parent.parent

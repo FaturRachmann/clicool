@@ -2,14 +2,12 @@
 
 import hashlib
 import json
-import shutil
 from datetime import datetime
 from pathlib import Path
-from typing import Optional
 
 from rich.console import Console
 
-from .. import BACKUPS_DIR, CLICOOL_HOME
+from .. import BACKUPS_DIR
 
 console = Console()
 
@@ -22,7 +20,7 @@ class BackupMetadata:
         backup_id: str,
         timestamp: str,
         shell: str,
-        theme: Optional[str],
+        theme: str | None,
         files: list[str],
         checksum: str,
     ):
@@ -70,8 +68,8 @@ class BackupManager:
         self,
         config_path: Path,
         shell_type: str,
-        theme_name: Optional[str] = None,
-    ) -> Optional[BackupMetadata]:
+        theme_name: str | None = None,
+    ) -> BackupMetadata | None:
         """
         Create a backup of a config file.
 
@@ -84,9 +82,7 @@ class BackupManager:
             BackupMetadata if successful, None otherwise
         """
         if not config_path.exists():
-            console.print(
-                f"[yellow]Config file doesn't exist: {config_path}[/yellow]"
-            )
+            console.print(f"[yellow]Config file doesn't exist: {config_path}[/yellow]")
             return None
 
         # Generate backup ID and filename
@@ -96,7 +92,7 @@ class BackupManager:
 
         # Read original content
         try:
-            with open(config_path, "r") as f:
+            with open(config_path) as f:
                 content = f.read()
         except Exception as e:
             console.print(f"[red]Error reading {config_path}: {e}[/red]")
@@ -134,16 +130,14 @@ class BackupManager:
         # Rotate old backups
         self._rotate_backups()
 
-        console.print(
-            f"[green]✓ Backup created: {backup_filename}[/green]"
-        )
+        console.print(f"[green]✓ Backup created: {backup_filename}[/green]")
 
         return metadata
 
     def restore_backup(
         self,
         backup_id: str,
-        config_path: Optional[Path] = None,
+        config_path: Path | None = None,
     ) -> bool:
         """
         Restore a backup.
@@ -180,7 +174,7 @@ class BackupManager:
 
         # Read backup content
         try:
-            with open(backup_file, "r") as f:
+            with open(backup_file) as f:
                 content = f.read()
         except Exception as e:
             console.print(f"[red]Error reading backup: {e}[/red]")
@@ -189,18 +183,14 @@ class BackupManager:
         # Verify checksum
         current_checksum = hashlib.sha256(content.encode()).hexdigest()
         if current_checksum != metadata.checksum:
-            console.print(
-                "[yellow]Warning: Backup checksum mismatch[/yellow]"
-            )
+            console.print("[yellow]Warning: Backup checksum mismatch[/yellow]")
 
         # Write to restore path
         try:
             restore_path.parent.mkdir(parents=True, exist_ok=True)
             with open(restore_path, "w") as f:
                 f.write(content)
-            console.print(
-                f"[green]✓ Restored backup {backup_id} to {restore_path}[/green]"
-            )
+            console.print(f"[green]✓ Restored backup {backup_id} to {restore_path}[/green]")
             return True
         except Exception as e:
             console.print(f"[red]Error restoring backup: {e}[/red]")
@@ -219,7 +209,7 @@ class BackupManager:
                 continue
 
             try:
-                with open(metadata_file, "r") as f:
+                with open(metadata_file) as f:
                     data = json.load(f)
                 backups.append(BackupMetadata.from_dict(data))
             except Exception:
@@ -266,20 +256,20 @@ class BackupManager:
         with open(metadata_file, "w") as f:
             json.dump(metadata.to_dict(), f, indent=2)
 
-    def _load_metadata(self, backup_id: str) -> Optional[BackupMetadata]:
+    def _load_metadata(self, backup_id: str) -> BackupMetadata | None:
         """Load backup metadata."""
         metadata_file = self.backups_dir / f"{backup_id}.json"
         if not metadata_file.exists():
             return None
 
         try:
-            with open(metadata_file, "r") as f:
+            with open(metadata_file) as f:
                 data = json.load(f)
             return BackupMetadata.from_dict(data)
         except Exception:
             return None
 
-    def _find_backup_file(self, backup_id: str) -> Optional[Path]:
+    def _find_backup_file(self, backup_id: str) -> Path | None:
         """Find backup file for a backup ID."""
         metadata = self._load_metadata(backup_id)
         if not metadata:
@@ -304,14 +294,14 @@ class BackupManager:
             for backup in backups[self.max_backups :]:
                 self.delete_backup(backup.backup_id)
 
-    def get_backup_content(self, backup_id: str) -> Optional[str]:
+    def get_backup_content(self, backup_id: str) -> str | None:
         """Get content of a backup file."""
         backup_file = self._find_backup_file(backup_id)
         if not backup_file or not backup_file.exists():
             return None
 
         try:
-            with open(backup_file, "r") as f:
+            with open(backup_file) as f:
                 return f.read()
         except Exception:
             return None
@@ -322,13 +312,13 @@ _manager = BackupManager()
 
 
 def create_backup(
-    config_path: Path, shell_type: str, theme_name: Optional[str] = None
-) -> Optional[BackupMetadata]:
+    config_path: Path, shell_type: str, theme_name: str | None = None
+) -> BackupMetadata | None:
     """Create a backup."""
     return _manager.create_backup(config_path, shell_type, theme_name)
 
 
-def restore_backup(backup_id: str, config_path: Optional[Path] = None) -> bool:
+def restore_backup(backup_id: str, config_path: Path | None = None) -> bool:
     """Restore a backup."""
     return _manager.restore_backup(backup_id, config_path)
 

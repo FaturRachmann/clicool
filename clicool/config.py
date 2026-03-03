@@ -2,7 +2,6 @@
 
 import json
 from pathlib import Path
-from typing import Optional
 
 from pydantic import BaseModel, Field
 
@@ -14,13 +13,13 @@ class ClicoolConfig(BaseModel):
     """Configuration model for clicool."""
 
     # Current active theme
-    active_theme: Optional[str] = None
+    active_theme: str | None = None
     # Active layers
     active_layers: list[str] = Field(default_factory=list)
     # Active widgets
     active_widgets: list[str] = Field(default_factory=list)
     # Shell config file path
-    shell_config_path: Optional[str] = None
+    shell_config_path: str | None = None
     # Auto backup on enable
     auto_backup: bool = True
     # Enable animations
@@ -41,7 +40,7 @@ class ClicoolConfig(BaseModel):
     custom_variables: dict[str, str] = Field(default_factory=dict)
 
     @classmethod
-    def load(cls, config_path: Optional[Path] = None) -> "ClicoolConfig":
+    def load(cls, config_path: Path | None = None) -> "ClicoolConfig":
         """Load configuration from file."""
         if config_path is None:
             config_path = CLICOOL_HOME / "config.json"
@@ -50,14 +49,14 @@ class ClicoolConfig(BaseModel):
             return cls()
 
         try:
-            with open(config_path, "r") as f:
+            with open(config_path) as f:
                 data = json.load(f)
             return cls(**data)
-        except (json.JSONDecodeError, Exception) as e:
+        except (json.JSONDecodeError, Exception):
             # Return default config on error
             return cls()
 
-    def save(self, config_path: Optional[Path] = None) -> None:
+    def save(self, config_path: Path | None = None) -> None:
         """Save configuration to file."""
         if config_path is None:
             config_path = CLICOOL_HOME / "config.json"

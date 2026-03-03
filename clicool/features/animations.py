@@ -1,6 +1,7 @@
 """Banner animations for theme activation."""
 
 import time
+
 from rich.console import Console
 
 console = Console()
@@ -101,8 +102,7 @@ class BannerAnimation:
 
         for _ in range(3):
             glitched = "".join(
-                c if c == " " else glitch_chars[hash(c) % len(glitch_chars)]
-                for c in message
+                c if c == " " else glitch_chars[hash(c) % len(glitch_chars)] for c in message
             )
             console.print(f"\r[red]{glitched}[/red]    ", end="")
             time.sleep(0.05)

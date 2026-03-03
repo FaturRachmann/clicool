@@ -5,7 +5,6 @@ import subprocess
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
-from typing import Optional
 
 from rich.console import Console
 from rich.panel import Panel
@@ -33,8 +32,8 @@ class CheckResult:
     name: str
     status: CheckStatus
     message: str
-    details: Optional[str] = None
-    recommendation: Optional[str] = None
+    details: str | None = None
+    recommendation: str | None = None
 
 
 class Doctor:
@@ -91,9 +90,7 @@ class Doctor:
                     )
                 )
             else:
-                status_str = (
-                    f"{shell_info.shell_type.value} {shell_info.version}"
-                )
+                status_str = f"{shell_info.shell_type.value} {shell_info.version}"
                 self.results.append(
                     CheckResult(
                         name="Shell Detection",
@@ -194,9 +191,11 @@ class Doctor:
                         name="Font",
                         status=CheckStatus.OK,
                         message=terminal_info.font_name,
-                        details=f"Size: {terminal_info.font_size}pt"
-                        if terminal_info.font_size
-                        else None,
+                        details=(
+                            f"Size: {terminal_info.font_size}pt"
+                            if terminal_info.font_size
+                            else None
+                        ),
                     )
                 )
             else:
@@ -342,7 +341,6 @@ class Doctor:
 
     def _check_system(self) -> None:
         """Check system information."""
-        import os
         import platform
 
         details = [
@@ -409,9 +407,7 @@ class Doctor:
         console.print(summary)
 
         # Show recommendations if any
-        recommendations = [
-            r.recommendation for r in self.results if r.recommendation
-        ]
+        recommendations = [r.recommendation for r in self.results if r.recommendation]
         if recommendations:
             console.print(
                 Panel(

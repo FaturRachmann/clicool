@@ -120,6 +120,16 @@ log_info "Creating git tag v${NEW_VERSION}..."
 git tag "v${NEW_VERSION}"
 
 log_info "Pushing to GitHub..."
+
+# Check if using HTTPS remote
+REMOTE_URL=$(git remote get-url origin)
+if [[ $REMOTE_URL == https://* ]]; then
+    log_warn "Using HTTPS remote. SSH is recommended for easier authentication."
+    log_info "To switch to SSH, run:"
+    log_info "  git remote set-url origin git@github.com:FaturRachmann/clicool.git"
+    echo ""
+fi
+
 git push origin main
 git push origin "v${NEW_VERSION}"
 

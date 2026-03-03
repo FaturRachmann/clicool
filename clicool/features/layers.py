@@ -1,7 +1,5 @@
 """Layer system for modular theme components."""
 
-from typing import Optional
-
 from ..core.theme_loader import LayerConfig, ThemeConfig
 
 
@@ -29,9 +27,7 @@ class LayerManager:
         """List active layers."""
         return self.active_layers.copy()
 
-    def merge_layers(
-        self, theme: ThemeConfig, layers: list[LayerConfig]
-    ) -> ThemeConfig:
+    def merge_layers(self, theme: ThemeConfig, layers: list[LayerConfig]) -> ThemeConfig:
         """
         Merge layers into a theme.
 

@@ -2,7 +2,6 @@
 
 import difflib
 from pathlib import Path
-from typing import Optional
 
 from rich.console import Console
 from rich.panel import Panel
@@ -22,9 +21,9 @@ class ConfigDiffer:
     def diff(
         self,
         config_path: Path,
-        backup_id: Optional[str] = None,
-        original_content: Optional[str] = None,
-    ) -> Optional[str]:
+        backup_id: str | None = None,
+        original_content: str | None = None,
+    ) -> str | None:
         """
         Show diff between current config and backup.
 
@@ -37,14 +36,12 @@ class ConfigDiffer:
             Diff string or None if comparison not possible
         """
         if not config_path.exists():
-            console.print(
-                f"[yellow]Config file not found: {config_path}[/yellow]"
-            )
+            console.print(f"[yellow]Config file not found: {config_path}[/yellow]")
             return None
 
         # Read current content
         try:
-            with open(config_path, "r") as f:
+            with open(config_path) as f:
                 current_content = f.read()
         except Exception as e:
             console.print(f"[red]Error reading {config_path}: {e}[/red]")
@@ -54,14 +51,10 @@ class ConfigDiffer:
         if backup_id:
             original_content = self.backup_manager.get_backup_content(backup_id)
             if not original_content:
-                console.print(
-                    f"[red]Backup not found: {backup_id}[/red]"
-                )
+                console.print(f"[red]Backup not found: {backup_id}[/red]")
                 return None
         elif original_content is None:
-            console.print(
-                "[yellow]No backup ID or original content provided[/yellow]"
-            )
+            console.print("[yellow]No backup ID or original content provided[/yellow]")
             return None
 
         # Generate diff
@@ -79,7 +72,7 @@ class ConfigDiffer:
         config_path: Path,
         theme1: str,
         theme2: str,
-    ) -> Optional[str]:
+    ) -> str | None:
         """
         Show diff between two theme injections in a config.
 
@@ -99,15 +92,11 @@ class ConfigDiffer:
         content2 = injector.extract_block(config_path, theme2)
 
         if not content1:
-            console.print(
-                f"[yellow]Theme '{theme1}' not found in config[/yellow]"
-            )
+            console.print(f"[yellow]Theme '{theme1}' not found in config[/yellow]")
             return None
 
         if not content2:
-            console.print(
-                f"[yellow]Theme '{theme2}' not found in config[/yellow]"
-            )
+            console.print(f"[yellow]Theme '{theme2}' not found in config[/yellow]")
             return None
 
         diff = self._generate_diff(
@@ -122,8 +111,8 @@ class ConfigDiffer:
     def show_diff(
         self,
         config_path: Path,
-        backup_id: Optional[str] = None,
-        original_content: Optional[str] = None,
+        backup_id: str | None = None,
+        original_content: str | None = None,
     ) -> None:
         """
         Display diff in terminal.
@@ -169,8 +158,8 @@ class ConfigDiffer:
     def get_changes_summary(
         self,
         config_path: Path,
-        backup_id: Optional[str] = None,
-        original_content: Optional[str] = None,
+        backup_id: str | None = None,
+        original_content: str | None = None,
     ) -> dict:
         """
         Get summary of changes.
@@ -188,7 +177,7 @@ class ConfigDiffer:
 
         # Read current content
         try:
-            with open(config_path, "r") as f:
+            with open(config_path) as f:
                 current_content = f.read()
         except Exception:
             return {"added": 0, "removed": 0, "changed": 0}
@@ -239,17 +228,17 @@ _differ = ConfigDiffer()
 
 def diff(
     config_path: Path,
-    backup_id: Optional[str] = None,
-    original_content: Optional[str] = None,
-) -> Optional[str]:
+    backup_id: str | None = None,
+    original_content: str | None = None,
+) -> str | None:
     """Get diff."""
     return _differ.diff(config_path, backup_id, original_content)
 
 
 def show_diff(
     config_path: Path,
-    backup_id: Optional[str] = None,
-    original_content: Optional[str] = None,
+    backup_id: str | None = None,
+    original_content: str | None = None,
 ) -> None:
     """Show diff in terminal."""
     _differ.show_diff(config_path, backup_id, original_content)

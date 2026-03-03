@@ -1,7 +1,5 @@
 """Color utilities for terminal output."""
 
-from typing import Optional, Tuple
-
 
 class ColorConverter:
     """Convert between color formats."""
@@ -31,7 +29,7 @@ class ColorConverter:
     }
 
     @staticmethod
-    def hex_to_rgb(hex_color: str) -> Tuple[int, int, int]:
+    def hex_to_rgb(hex_color: str) -> tuple[int, int, int]:
         """
         Convert hex color to RGB tuple.
 
@@ -45,9 +43,7 @@ class ColorConverter:
         if len(hex_color) != 6:
             raise ValueError(f"Invalid hex color: {hex_color}")
 
-        return tuple(
-            int(hex_color[i : i + 2], 16) for i in (0, 2, 4)
-        )
+        return tuple(int(hex_color[i : i + 2], 16) for i in (0, 2, 4))
 
     @staticmethod
     def rgb_to_ansi(r: int, g: int, b: int) -> int:
@@ -117,10 +113,10 @@ class ColorConverter:
             ANSI escape sequence
         """
         r, g, b = ColorConverter.hex_to_rgb(hex_color)
-        return f"\033[{38;2;{r};{g};{b}}m"
+        return f"\033[38;2;{r}:{g}:{b}m"
 
     @staticmethod
-    def named_to_ansi(name: str) -> Optional[int]:
+    def named_to_ansi(name: str) -> int | None:
         """
         Convert color name to ANSI code.
 

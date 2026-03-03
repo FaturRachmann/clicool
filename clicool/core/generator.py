@@ -1,32 +1,33 @@
 """Advanced prompt generator with beautiful ANSI colors and effects."""
 
-from typing import Optional
 from .theme_loader import LayerConfig, ThemeConfig
 
 
 class AdvancedPromptGenerator:
     """Generate beautiful shell prompts with advanced ANSI colors."""
 
-    def generate(self, theme: ThemeConfig, shell_type: str, layers: Optional[list[LayerConfig]] = None) -> str:
+    def generate(
+        self, theme: ThemeConfig, shell_type: str, layers: list[LayerConfig] | None = None
+    ) -> str:
         """Generate complete shell configuration."""
-        
-        if shell_type == 'bash':
+
+        if shell_type == "bash":
             return self._generate_bash(theme)
-        elif shell_type == 'zsh':
+        elif shell_type == "zsh":
             return self._generate_zsh(theme)
-        elif shell_type == 'fish':
+        elif shell_type == "fish":
             return self._generate_fish(theme)
         else:
             return self._generate_bash(theme)
 
     def _generate_bash(self, theme: ThemeConfig) -> str:
         """Generate beautiful bash prompt."""
-        
+
         theme_name = theme.name.lower()
-        
+
         # Cyberpunk theme - NEON COLORS
-        if theme_name == 'cyberpunk':
-            return '''
+        if theme_name == "cyberpunk":
+            return """
 # CLICOOL Theme: cyberpunk
 # Neon Cyberpunk Style
 
@@ -70,11 +71,11 @@ PS1="${CYAN}\\u${WHITE}@${MAGENTA}\\h${WHITE}:${YELLOW}\\w${RESET}$(clicool_git_
 
 # Terminal title
 PROMPT_COMMAND='echo -ne "\\033]0;${USER}@${HOSTNAME}: ${PWD}\\007"'
-'''
+"""
 
         # Matrix theme - GREEN HACKER
-        elif theme_name == 'matrix':
-            return '''
+        elif theme_name == "matrix":
+            return """
 # CLICOOL Theme: matrix
 # Hacker Green Style
 
@@ -95,11 +96,11 @@ clicool_git_branch() {
 
 # Main prompt
 PS1="${GREEN}\\u${DIM}@${GREEN}\\h${DIM}:${GREEN}\\w${RESET}$(clicool_git_branch)\\n${GREEN}$${RESET} "
-'''
+"""
 
         # Retro theme - AMBER
-        elif theme_name == 'retro':
-            return '''
+        elif theme_name == "retro":
+            return """
 # CLICOOL Theme: retro
 # Amber CRT Style
 
@@ -119,11 +120,11 @@ clicool_git_branch() {
 
 # Main prompt
 PS1="${AMBER}\\u${DIM}@${AMBER}\\h${DIM}:${AMBER}\\w${RESET}$(clicool_git_branch)\\n${AMBER}>${RESET} "
-'''
+"""
 
         # Minimal theme - CLEAN
-        elif theme_name == 'minimal':
-            return '''
+        elif theme_name == "minimal":
+            return """
 # CLICOOL Theme: minimal
 # Clean Minimal Style
 
@@ -142,11 +143,11 @@ clicool_git_branch() {
 
 # Main prompt
 PS1="${GRAY}\\w${RESET}$(clicool_git_branch)\\n${GRAY}❯${RESET} "
-'''
+"""
 
         # DevOps theme - PROFESSIONAL
-        elif theme_name == 'devops' or theme_name == 'devops pro':
-            return '''
+        elif theme_name == "devops" or theme_name == "devops pro":
+            return """
 # CLICOOL Theme: devops
 # DevOps Professional Style
 
@@ -194,11 +195,11 @@ clicool_aws() {
 
 # Main prompt
 PS1="${CYAN}\\u${DIM}@${CYAN}\\h${DIM}:${ORANGE}\\w${RESET}$(clicool_git_branch)$(clicool_k8s)$(clicool_docker)$(clicool_aws)\\n${CYAN}>${RESET} "
-'''
+"""
 
         # Default theme
         else:
-            return '''
+            return """
 # CLICOOL Theme: default
 # Clean Default Style
 
@@ -213,15 +214,15 @@ clicool_git_branch() {
 }
 
 PS1="${GREEN}\\u@\\h${DIM}:${BLUE}\\w${RESET}$(clicool_git_branch)\\n\\$ "
-'''
+"""
 
     def _generate_zsh(self, theme: ThemeConfig) -> str:
         """Generate beautiful zsh prompt."""
-        
+
         theme_name = theme.name.lower()
-        
-        if theme_name == 'cyberpunk':
-            return '''
+
+        if theme_name == "cyberpunk":
+            return """
 # CLICOOL Theme: cyberpunk (zsh)
 
 autoload -U colors && colors
@@ -236,9 +237,9 @@ git_branch() {
 
 PROMPT='%{$fg_bold[cyan]%}⚡ %n%{$reset_color%}@%{$fg_bold[magenta]%}%m%{$reset_color%}:%{$fg_bold[yellow]%}%~%{$reset_color%}$(git_branch)
 %{$fg_bold[green]%}λ %{$reset_color%}'
-'''
-        elif theme_name == 'matrix':
-            return '''
+"""
+        elif theme_name == "matrix":
+            return """
 # CLICOOL Theme: matrix (zsh)
 
 autoload -U colors && colors
@@ -251,40 +252,40 @@ git_branch() {
 
 PROMPT='%{$fg_bold[green]%}%n@%m:%~$(git_branch)
 $%{$reset_color%} '
-'''
+"""
         else:
             return self._generate_bash(theme)
 
     def _generate_fish(self, theme: ThemeConfig) -> str:
         """Generate beautiful fish prompt."""
-        
-        return '''
+
+        return """
 # CLICOOL Theme: fish
 
 function fish_prompt
     set -l last_status $status
-    
+
     # Colors
     set -g fish_color_cwd blue
     set -g fish_color_command green
     set -g fish_color_comment cyan
-    
+
     # Git branch
     set -l branch (git rev-parse --abbrev-ref HEAD 2>/dev/null)
-    
+
     # Prompt
     echo -n "\\e[1;36m⚡ $USER\\e[0m@"
     echo -n "\\e[1;35m"(hostname)"\\e[0m:"
     echo -n "\\e[1;33m"(pwd)"\\e[0m"
-    
+
     if [ -n "$branch" ]
         echo -n " \\e[1;32m($branch)\\e[0m"
     end
-    
+
     echo ""
     echo -n "\\e[1;32mλ \\e[0m"
 end
-'''
+"""
 
 
 __all__ = ["AdvancedPromptGenerator"]

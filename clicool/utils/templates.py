@@ -1,8 +1,9 @@
 """Template engine utilities."""
 
-from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
+
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from .. import TEMPLATES_DIR
 
@@ -10,7 +11,7 @@ from .. import TEMPLATES_DIR
 class TemplateEngine:
     """Jinja2 template engine for clicool."""
 
-    def __init__(self, template_dir: Optional[Path] = None):
+    def __init__(self, template_dir: Path | None = None):
         """
         Initialize template engine.
 
@@ -104,7 +105,7 @@ DEFAULT_CONTEXT = {
 
 def render_template(
     template_name: str,
-    context: Optional[dict[str, Any]] = None,
+    context: dict[str, Any] | None = None,
 ) -> str:
     """
     Render a template.
@@ -123,7 +124,7 @@ def render_template(
 
 def render_template_string(
     template_string: str,
-    context: Optional[dict[str, Any]] = None,
+    context: dict[str, Any] | None = None,
 ) -> str:
     """
     Render a template string.

@@ -2,7 +2,6 @@
 
 import re
 from pathlib import Path
-from typing import Optional, Tuple
 
 from rich.console import Console
 
@@ -28,8 +27,8 @@ class ConfigInjector:
         config_path: Path,
         config_content: str,
         theme_name: str,
-        backup_content: Optional[str] = None,
-    ) -> Tuple[bool, str]:
+        backup_content: str | None = None,
+    ) -> tuple[bool, str]:
         """
         Inject configuration into shell config file.
 
@@ -55,7 +54,7 @@ class ConfigInjector:
 
         # Read existing content
         try:
-            with open(config_path, "r") as f:
+            with open(config_path) as f:
                 existing_content = f.read()
         except Exception as e:
             return (False, f"[red]Error reading {config_path}: {e}[/red]")
@@ -76,9 +75,7 @@ class ConfigInjector:
             )
         else:
             # New injection
-            return self._inject_new(
-                config_path, existing_content, config_content, theme_name
-            )
+            return self._inject_new(config_path, existing_content, config_content, theme_name)
 
     def _inject_new(
         self,
@@ -86,7 +83,7 @@ class ConfigInjector:
         existing_content: str,
         config_content: str,
         theme_name: str,
-    ) -> Tuple[bool, str]:
+    ) -> tuple[bool, str]:
         """Inject new configuration."""
         start_marker = START_MARKER.format(theme=theme_name)
         end_marker = END_MARKER.format(theme=theme_name)
@@ -129,7 +126,7 @@ class ConfigInjector:
         theme_name: str,
         start_marker: str,
         end_marker: str,
-    ) -> Tuple[bool, str]:
+    ) -> tuple[bool, str]:
         """Update existing configuration."""
         # Find existing block
         pattern = re.escape(start_marker) + r"(.*?)" + re.escape(end_marker)
@@ -138,7 +135,7 @@ class ConfigInjector:
         if not match:
             return (
                 False,
-                f"[red]Found start marker but couldn't find end marker[/red]",
+                "[red]Found start marker but couldn't find end marker[/red]",
             )
 
         # Replace existing block
@@ -147,9 +144,9 @@ class ConfigInjector:
 {config_content}
 {end_marker}"""
 
-        new_content = existing_content[: match.start()] + new_block + existing_content[
-            match.end() :
-        ]
+        new_content = (
+            existing_content[: match.start()] + new_block + existing_content[match.end() :]
+        )
 
         if not self.dry_run:
             try:
@@ -170,7 +167,7 @@ class ConfigInjector:
                 f"[yellow]Dry run: Would update theme '{theme_name}' in {config_path}[/yellow]",
             )
 
-    def remove(self, config_path: Path, theme_name: str) -> Tuple[bool, str]:
+    def remove(self, config_path: Path, theme_name: str) -> tuple[bool, str]:
         """
         Remove injected configuration.
 
@@ -185,7 +182,7 @@ class ConfigInjector:
             return (False, f"[red]Config file not found: {config_path}[/red]")
 
         try:
-            with open(config_path, "r") as f:
+            with open(config_path) as f:
                 content = f.read()
         except Exception as e:
             return (False, f"[red]Error reading {config_path}: {e}[/red]")
@@ -228,7 +225,7 @@ class ConfigInjector:
             return False
 
         try:
-            with open(config_path, "r") as f:
+            with open(config_path) as f:
                 content = f.read()
         except Exception:
             return False
@@ -242,7 +239,7 @@ class ConfigInjector:
             return []
 
         try:
-            with open(config_path, "r") as f:
+            with open(config_path) as f:
                 content = f.read()
         except Exception:
             return []
@@ -253,15 +250,13 @@ class ConfigInjector:
 
         return [m.group("theme") for m in matches]
 
-    def extract_block(
-        self, config_path: Path, theme_name: str
-    ) -> Optional[str]:
+    def extract_block(self, config_path: Path, theme_name: str) -> str | None:
         """Extract injected configuration block."""
         if not config_path.exists():
             return None
 
         try:
-            with open(config_path, "r") as f:
+            with open(config_path) as f:
                 content = f.read()
         except Exception:
             return None

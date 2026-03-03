@@ -1,11 +1,10 @@
 """Rollback engine for reverting theme changes."""
 
 from pathlib import Path
-from typing import Optional, Tuple
 
 from rich.console import Console
 
-from .backup import BackupManager, BackupMetadata, list_backups
+from .backup import BackupManager, BackupMetadata
 
 console = Console()
 
@@ -19,9 +18,9 @@ class RollbackEngine:
     def rollback(
         self,
         config_path: Path,
-        theme_name: Optional[str] = None,
-        backup_id: Optional[str] = None,
-    ) -> Tuple[bool, str]:
+        theme_name: str | None = None,
+        backup_id: str | None = None,
+    ) -> tuple[bool, str]:
         """
         Rollback theme changes.
 
@@ -43,9 +42,7 @@ class RollbackEngine:
             # Rollback to latest backup
             return self._rollback_to_latest(config_path)
 
-    def _restore_specific_backup(
-        self, backup_id: str, config_path: Path
-    ) -> Tuple[bool, str]:
+    def _restore_specific_backup(self, backup_id: str, config_path: Path) -> tuple[bool, str]:
         """Restore a specific backup."""
         metadata = self._get_backup_metadata(backup_id)
         if not metadata:
@@ -63,9 +60,7 @@ class RollbackEngine:
                 f"[red]Failed to restore backup {backup_id}[/red]",
             )
 
-    def _rollback_theme(
-        self, theme_name: str, config_path: Path
-    ) -> Tuple[bool, str]:
+    def _rollback_theme(self, theme_name: str, config_path: Path) -> tuple[bool, str]:
         """Rollback a specific theme."""
         # Find backup for this theme
         backups = self.backup_manager.list_backups()
@@ -82,9 +77,7 @@ class RollbackEngine:
                 f"[yellow]No backup found for theme '{theme_name}'[/yellow]",
             )
 
-        success = self.backup_manager.restore_backup(
-            theme_backup.backup_id, config_path
-        )
+        success = self.backup_manager.restore_backup(theme_backup.backup_id, config_path)
         if success:
             return (
                 True,
@@ -96,7 +89,7 @@ class RollbackEngine:
                 f"[red]Failed to rollback theme '{theme_name}'[/red]",
             )
 
-    def _rollback_to_latest(self, config_path: Path) -> Tuple[bool, str]:
+    def _rollback_to_latest(self, config_path: Path) -> tuple[bool, str]:
         """Rollback to latest backup."""
         backups = self.backup_manager.list_backups()
 
@@ -107,9 +100,7 @@ class RollbackEngine:
             )
 
         latest_backup = backups[0]
-        success = self.backup_manager.restore_backup(
-            latest_backup.backup_id, config_path
-        )
+        success = self.backup_manager.restore_backup(latest_backup.backup_id, config_path)
         if success:
             return (
                 True,
@@ -118,10 +109,10 @@ class RollbackEngine:
         else:
             return (
                 False,
-                f"[red]Failed to rollback to latest backup[/red]",
+                "[red]Failed to rollback to latest backup[/red]",
             )
 
-    def _get_backup_metadata(self, backup_id: str) -> Optional[BackupMetadata]:
+    def _get_backup_metadata(self, backup_id: str) -> BackupMetadata | None:
         """Get metadata for a backup."""
         backups = self.backup_manager.list_backups()
         for backup in backups:
@@ -167,9 +158,9 @@ _engine = RollbackEngine()
 
 def rollback(
     config_path: Path,
-    theme_name: Optional[str] = None,
-    backup_id: Optional[str] = None,
-) -> Tuple[bool, str]:
+    theme_name: str | None = None,
+    backup_id: str | None = None,
+) -> tuple[bool, str]:
     """Perform rollback."""
     return _engine.rollback(config_path, theme_name, backup_id)
 

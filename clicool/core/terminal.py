@@ -4,7 +4,6 @@ import os
 import subprocess
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional
 
 
 class TerminalType(Enum):
@@ -31,13 +30,13 @@ class TerminalInfo:
 
     terminal_type: TerminalType
     name: str
-    version: Optional[str]
+    version: str | None
     supports_true_color: bool
     supports_256_color: bool
     supports_unicode: bool
     supports_hyperlinks: bool
-    font_name: Optional[str]
-    font_size: Optional[int]
+    font_name: str | None
+    font_size: int | None
     columns: int
     rows: int
 
@@ -126,7 +125,7 @@ class TerminalProbe:
 
         return TerminalType.UNKNOWN
 
-    def _get_terminal_version(self, terminal_type: TerminalType) -> Optional[str]:
+    def _get_terminal_version(self, terminal_type: TerminalType) -> str | None:
         """Get terminal emulator version."""
         if terminal_type == TerminalType.UNKNOWN:
             return None
@@ -230,7 +229,7 @@ class TerminalProbe:
         terminal_type = self._detect_terminal_type()
         return terminal_type in hyperlink_terminals
 
-    def _get_font_info(self) -> tuple[Optional[str], Optional[int]]:
+    def _get_font_info(self) -> tuple[str | None, int | None]:
         """Get terminal font information."""
         # This is difficult to query programmatically
         # Return None as default - user can configure manually

@@ -2,7 +2,7 @@
 
 import json
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 from pydantic import ValidationError
 
@@ -12,7 +12,7 @@ from .theme_loader import LayerConfig, ThemeConfig
 class ValidationResult:
     """Result of theme validation."""
 
-    def __init__(self, valid: bool, errors: Optional[list[str]] = None):
+    def __init__(self, valid: bool, errors: list[str] | None = None):
         self.valid = valid
         self.errors = errors or []
 
@@ -22,7 +22,7 @@ class ValidationResult:
     def __str__(self) -> str:
         if self.valid:
             return "Validation passed ✓"
-        return f"Validation failed ✗\n" + "\n".join(f"  - {e}" for e in self.errors)
+        return "Validation failed ✗\n" + "\n".join(f"  - {e}" for e in self.errors)
 
 
 class ThemeValidator:
@@ -166,7 +166,7 @@ class ThemeValidator:
             return ValidationResult(valid=False, errors=[f"File not found: {file_path}"])
 
         try:
-            with open(file_path, "r") as f:
+            with open(file_path) as f:
                 data = json.load(f)
         except json.JSONDecodeError as e:
             return ValidationResult(valid=False, errors=[f"Invalid JSON: {e}"])

@@ -1,8 +1,7 @@
 """Terminal widgets for prompts."""
 
-import subprocess
 import os
-from typing import Optional
+import subprocess
 
 
 class WidgetRenderer:
@@ -63,6 +62,7 @@ class WidgetRenderer:
     def render_time(format_str: str = "%H:%M:%S") -> str:
         """Render time widget."""
         from datetime import datetime
+
         return datetime.now().strftime(format_str)
 
     @staticmethod
@@ -114,7 +114,6 @@ class WidgetRenderer:
         """Render virtualenv widget."""
         venv = os.environ.get("VIRTUAL_ENV")
         if venv:
-            import os.path
             return f"🐍 {os.path.basename(venv)}"
         return ""
 
@@ -139,6 +138,7 @@ class WidgetRenderer:
     def render_python_version() -> str:
         """Render Python version widget."""
         import sys
+
         return f"🐍 {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
 
 
