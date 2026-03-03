@@ -4,7 +4,7 @@ CLICOOL - Modern Terminal Theme & Profile Engine
 Make your terminal look like it owns the system.
 """
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 __author__ = "Trustlabs"
 
 from pathlib import Path
