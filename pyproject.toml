@@ -70,6 +70,7 @@ Changelog = "https://github.com/trustlabs/clicool/blob/main/CHANGELOG.md"
 
 [tool.hatch.build.targets.wheel]
 packages = ["clicool"]
+force-include = { "themes" = "clicool/themes", "templates" = "clicool/templates" }
 
 [tool.hatch.build.targets.sdist]
 include = [

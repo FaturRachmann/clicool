@@ -11,9 +11,9 @@ import os
 from pathlib import Path
 
 # Package root directory
-PACKAGE_ROOT = Path(__file__).parent.parent
+PACKAGE_ROOT = Path(__file__).parent
 
-# Theme directories
+# Theme directories (inside package)
 THEMES_DIR = PACKAGE_ROOT / "themes"
 BUILTIN_THEMES_DIR = THEMES_DIR / "builtin"
 LAYERS_DIR = THEMES_DIR / "layers"
