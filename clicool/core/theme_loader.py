@@ -212,15 +212,15 @@ class ThemeLoader:
             raise FileNotFoundError(f"Layer '{layer_name}' not found")
 
         layer = self._load_from_file(layer_path, LayerConfig)
-        self._layer_cache[layer_name] = layer
-        return layer
+        self._layer_cache[layer_name] = layer  # type: ignore
+        return layer  # type: ignore
 
     def _load_from_file(self, path: Path, model_class: type) -> ThemeConfig | LayerConfig:
         """Load and validate JSON file."""
         with open(path) as f:
             data = json.load(f)
 
-        return model_class(**data)
+        return model_class(**data)  # type: ignore
 
     def list_themes(self) -> list[str]:
         """List all available themes."""

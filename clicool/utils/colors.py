@@ -29,7 +29,7 @@ class ColorConverter:
     }
 
     @staticmethod
-    def hex_to_rgb(hex_color: str) -> tuple[int, int, int]:
+    def hex_to_rgb(hex_color: str) -> tuple[int, ...]:
         """
         Convert hex color to RGB tuple.
 

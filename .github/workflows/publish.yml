@@ -11,6 +11,10 @@ jobs:
     name: Build and Publish to PyPI
     runs-on: ubuntu-latest
     
+    permissions:
+      id-token: write  # Required for PyPI trusted publishing
+      contents: write  # Required for GitHub Release
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

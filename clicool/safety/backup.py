@@ -198,7 +198,7 @@ class BackupManager:
 
     def list_backups(self) -> list[BackupMetadata]:
         """List all available backups."""
-        backups = []
+        backups: list[BackupMetadata] = []
 
         if not self.backups_dir.exists():
             return backups

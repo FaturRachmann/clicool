@@ -2,6 +2,7 @@
 
 from pathlib import Path
 
+from typing import Any, Optional, List
 import typer
 from rich.console import Console
 from rich.panel import Panel
@@ -62,7 +63,7 @@ def enable(
     theme_name: str = typer.Argument(..., help="Theme name to enable"),
     preview: bool = typer.Option(False, "--preview", "-p", help="Preview theme before applying"),
     dry_run: bool = typer.Option(False, "--dry-run", "-n", help="Show what would be changed"),
-    layer: list[str] | None = typer.Option(None, "--layer", "-l", help="Add layer to theme"),
+    layer: Optional[List[str]] = typer.Option(None, "--layer", "-l", help="Add layer to theme"),
     random: bool = typer.Option(False, "--random", "-r", help="Enable random theme"),
 ):
     """
@@ -423,7 +424,7 @@ def theme(
         theme_path = Path(name)
         if not theme_path.exists():
             # Try builtin themes
-            theme_path = theme_loader.BUILTIN_THEMES_DIR / f"{name}.json"
+            from clicool import BUILTIN_THEMES_DIR; theme_path = BUILTIN_THEMES_DIR / f"{name}.json"
 
         if not theme_path.exists():
             console.print(f"[red]Theme file not found: {name}[/red]")

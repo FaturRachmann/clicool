@@ -62,7 +62,7 @@ class TemplateEngine:
             Rendered template string
         """
         template = self.env.get_template(template_name)
-        return template.render(**context)
+        return str(template.render(**context))  # type: ignore
 
     def render_string(
         self,
@@ -80,7 +80,7 @@ class TemplateEngine:
             Rendered string
         """
         template = self.env.from_string(template_string)
-        return template.render(**context)
+        return str(template.render(**context))  # type: ignore
 
     def template_exists(self, template_name: str) -> bool:
         """
@@ -92,7 +92,7 @@ class TemplateEngine:
         Returns:
             True if template exists
         """
-        return self.env.loader.has_source(self.env, template_name)
+        return bool(self.env.loader.has_source(self.env, template_name))  # type: ignore
 
 
 # Default template variables

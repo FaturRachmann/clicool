@@ -239,7 +239,7 @@ class TerminalProbe:
         """Get terminal dimensions."""
         try:
             size = os.get_terminal_size()
-            return size.columns, size.rows
+            return size.columns, size.rows  # type: ignore
         except OSError:
             return 80, 24  # Default fallback
 

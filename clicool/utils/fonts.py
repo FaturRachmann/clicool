@@ -101,7 +101,7 @@ class FontDetector:
         Returns:
             List of font names
         """
-        fonts = []
+        fonts: list[str] = []
 
         if not directory.exists():
             return fonts
