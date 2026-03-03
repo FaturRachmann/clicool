@@ -5,7 +5,7 @@ from pathlib import Path
 
 from clicool.core.theme_loader import ThemeLoader, list_themes
 from clicool.core.injector import ConfigInjector
-from clicool.core.generator import PromptGenerator, FunctionGenerator
+from clicool.core.generator import AdvancedPromptGenerator
 from clicool.core.validator import validate_file
 from clicool.safety.backup import BackupManager
 
@@ -97,7 +97,7 @@ class TestThemeGeneration:
         loader = ThemeLoader()
         theme = loader.load_theme("cyberpunk")
         
-        generator = PromptGenerator()
+        generator = AdvancedPromptGenerator()
         config = generator.generate(theme, "bash")
         
         assert config is not None
@@ -108,14 +108,14 @@ class TestThemeGeneration:
         loader = ThemeLoader()
         theme = loader.load_theme("cyberpunk")
         
-        generator = PromptGenerator()
+        generator = AdvancedPromptGenerator()
         config = generator.generate(theme, "zsh")
         
         assert config is not None
 
     def test_generate_functions(self):
         """Test generating helper functions."""
-        func_gen = FunctionGenerator()
+        func_gen = 
         functions = func_gen.generate_all()
         
         assert functions is not None
@@ -179,7 +179,7 @@ class TestInjectionWorkflow:
         loader = ThemeLoader()
         theme = loader.load_theme("minimal")
         
-        generator = PromptGenerator()
+        generator = AdvancedPromptGenerator()
         config_content = generator.generate(theme, "bash")
         
         injector = ConfigInjector()
@@ -201,7 +201,7 @@ class TestInjectionWorkflow:
         loader = ThemeLoader()
         theme = loader.load_theme("minimal")
         
-        generator = PromptGenerator()
+        generator = AdvancedPromptGenerator()
         config_content = generator.generate(theme, "bash")
         
         injector = ConfigInjector()
