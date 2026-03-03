@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "clicool"
-version = "0.1.5"
+version = "0.1.6"
 description = "Modern Terminal Theme & Profile Engine - Make your terminal look like it owns the system"
 readme = "README.md"
 license = "MIT"
